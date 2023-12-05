@@ -28,11 +28,9 @@ class Student(models.Model):
 
 class Assignment(models.Model):
     title = models.CharField(max_length=200)
-    # description = models.TextField()
-    # deadline = models.DateTimeField()
+    uploadedDate = models.DateField(auto_now_add=True,null=True,blank=True)  # Automatically set to the current date and time when created
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.FileField(upload_to='assignments/')
-    # submitted_by = models.ForeignKey(User, related_name='submissions', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.title

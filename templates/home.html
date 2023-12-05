@@ -73,6 +73,32 @@
         span{
             padding-left: 10px;
         }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 150px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            margin-left: 150px;
+            
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Make the "Date of Submission" column smaller */
+        td:nth-child(3) {
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -89,6 +115,24 @@
             {% endif %}
         </div>
     </nav>
+    <table>
+        <thead>
+            <tr>
+                <th>S.N.</th>
+                <th>Assignment</th>
+                <th>Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assignment in assignments %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ assignment.title }}</td>
+                <td>{{ assignment.uploadedDate }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 
 </html>

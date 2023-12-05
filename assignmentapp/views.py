@@ -8,7 +8,15 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    if request.user.is_authenticated:
+        # If the user is logged in, filter assignments for the logged-in user
+        assignments = Assignment.objects.filter(uploaded_by=request.user)
+    else:
+        # Handle the case when the user is not logged in
+        assignments = []
+
+    return render(request, 'home.html', {'assignments': assignments})
+    
 
 def register(request):
     if request.method == 'POST':
@@ -31,9 +39,10 @@ def register(request):
                                    rollno=rollno, 
                                    semester=semester, 
                                    section=section,
+                                   contact=contact,
                                    password=passkey)
         student_instance.save()
-
+        login(request,user)
         return redirect('home')  # Redirect to a success page or wherever you want
 
     return render(request, 'register.html')
@@ -56,7 +65,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('home')g
+    return redirect('home')
 
 
 @login_required(login_url='login')
