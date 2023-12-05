@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Font Awesome CSS link -->
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            text-align: right;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        nav button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav button:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        span{
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            {% if user.is_authenticated %}
+                <button onclick="location.href='{% url 'submit' %}'"><i class="fas fa-upload"></i> Submit</button>
+                <button onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                <span>Hello, {{ user.username }}</span>
+            {% else %}
+                <button onclick="location.href='{% url 'register' %}'"><i class="fas fa-user-plus"></i> Register</button>
+                <button onclick="location.href='{% url 'login' %}'"><i class="fas fa-sign-in-alt"></i> Login</button>
+            {% endif %}
+        </div>
+    </nav>
+</body>
+
+</html>
