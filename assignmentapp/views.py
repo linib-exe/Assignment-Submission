@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -11,11 +11,13 @@ def home(request):
     if request.user.is_authenticated:
         # If the user is logged in, filter assignments for the logged-in user
         assignments = Assignment.objects.filter(uploaded_by=request.user)
+        stu = Student.objects.get(user=request.user)
+        
     else:
         # Handle the case when the user is not logged in
         assignments = []
 
-    return render(request, 'home.html', {'assignments': assignments})
+    return render(request, 'home.html', {'assignments': assignments,'student':stu})
     
 
 def register(request):
@@ -67,10 +69,22 @@ def logout_user(request):
     logout(request)
     return redirect('home')
 
+# @login_required(login_url='login')
+def dashboard(request):
+    if request.user.is_authenticated:
+        # If the user is logged in, filter assignments for the logged-in user
+        assignments = Assignment.objects.filter(uploaded_by=request.user)
+    else:
+        # Handle the case when the user is not logged in
+        assignments = []
+
+    return render(request, 'dashboard.html', {'assignments': assignments})
+
 
 @login_required(login_url='login')
   # Ensure the user is logged in to access this view
 def submit(request):
+    student = get_object_or_404(Student, user=request.user)
     if request.method == 'POST':
         title = request.POST.get('title')
         message = request.POST.get('message')
@@ -86,6 +100,6 @@ def submit(request):
         messages.success(request, 'Assignment submitted successfully!')
         return redirect('home')  # Redirect to a page showing a list of assignments
 
-    return render(request, 'submit.html')  # Adjust the template name as needed
+    return render(request, 'submit.html',{'student':student})  # Adjust the template name as needed
 
     

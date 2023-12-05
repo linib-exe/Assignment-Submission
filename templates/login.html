@@ -117,7 +117,7 @@
             {% if user.is_authenticated %}
                 <button onclick="location.href='{% url 'submit' %}'"><i class="fas fa-upload"></i> Submit</button>
                 <button onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                <span>Hello, {{ user.username }}</span>
+                <span>Hello, {{ student.name }}</span>
             {% else %}
                 <button onclick="location.href='{% url 'register' %}'"><i class="fas fa-user-plus"></i> Register</button>
                 

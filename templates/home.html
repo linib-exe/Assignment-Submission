@@ -10,111 +10,102 @@
 
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
 
-        nav {
-            background-color: #333;
-            color: white;
-            padding: 5px 10px;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            text-align: right;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
+nav {
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    text-align: right;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-        nav button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            margin-left: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
+nav button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 
-        nav button:hover {
-            background-color: #45a049;
-        }
+nav button:hover {
+    background-color: #45a049;
+    color: #fff;
+}
 
-        .container {
-            padding: 20px;
-            margin-top: 10px;
-        }
+.container {
+    padding: 20px;
+    margin-top: 10px;
+}
 
-        h1 {
-            color: #333;
-        }
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 150px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin-left: 150px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+th {
+    background-color: #4CAF50;
+    color: white;
+}
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
+/* Make the "Date of Submission" column smaller */
+td:nth-child(3) {
+    font-size: 14px;
+}
 
-        span{
-            padding-left: 10px;
-        }
+/* Add alternating row colors */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-top: 150px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            margin-left: 150px;
-            
-        }
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
+/* Responsive Design */
+@media only screen and (max-width: 600px) {
+    /* Adjust styles for smaller screens */
+}
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
+/* Icon Styling */
+nav i {
+    margin-right: 5px;
+    /* Add space between icon and text */
+}
+span{
+    padding-left: 15px;
+}
 
-        /* Make the "Date of Submission" column smaller */
-        td:nth-child(3) {
-            font-size: 14px;
-        }
-
-        /* Add styles for the footer */
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        nav img {
-            height: 40px; /* Adjust the height as needed */
-            margin-left: 10px;
-            margin-top: 5px;
-        }
+        
     </style>
 </head>
 
@@ -124,7 +115,8 @@
             {% if user.is_authenticated %}
                 <button onclick="location.href='{% url 'submit' %}'"><i class="fas fa-upload"></i> Submit</button>
                 <button onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                <span>Hello, {{ user.username }}</span>
+                <!-- <span>Hello, {{ user.username }}</span> -->
+                <span>Hello, {{ student.name }}</span>
             {% else %}
                 <button onclick="location.href='{% url 'register' %}'"><i class="fas fa-user-plus"></i> Register</button>
                 <button onclick="location.href='{% url 'login' %}'"><i class="fas fa-sign-in-alt"></i> Login</button>

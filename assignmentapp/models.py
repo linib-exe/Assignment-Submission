@@ -26,6 +26,15 @@ class Student(models.Model):
     def __str__(self):
         return self.name 
 
+class Teacher(models.Model):
+    user = models.ForeignKey(User,blank=True,default=True,on_delete=models.CASCADE)
+    name = models.CharField(max_length = 30)
+    password = models.CharField(max_length = 30)
+    contact = models.CharField(max_length = 10)
+    
+    def __str__(self):
+        return self.name 
+
 class Assignment(models.Model):
     title = models.CharField(max_length=200)
     uploadedDate = models.DateField(auto_now_add=True,null=True,blank=True)  # Automatically set to the current date and time when created
