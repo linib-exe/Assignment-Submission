@@ -52,16 +52,15 @@ def login_user(request):
         else:
             error_message = "Invalid Login"
             print(error_message)
-            print(username)
-            print(password)
     return render(request,'login.html')
 
 def logout_user(request):
     logout(request)
-    return redirect('home')
+    return redirect('home')g
 
 
-@login_required  # Ensure the user is logged in to access this view
+@login_required(login_url='login')
+  # Ensure the user is logged in to access this view
 def submit(request):
     if request.method == 'POST':
         title = request.POST.get('title')

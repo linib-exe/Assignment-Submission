@@ -31,7 +31,7 @@ class Assignment(models.Model):
     # description = models.TextField()
     # deadline = models.DateTimeField()
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    file = models.FileField(upload_to='media/')
+    file = models.FileField(upload_to='assignments/')
     # submitted_by = models.ForeignKey(User, related_name='submissions', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
