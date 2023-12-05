@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment Submission Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -89,6 +90,20 @@
         span{
             padding-left: 20px;
         }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        nav h3 {
+            height: 40px; /* Adjust the height as needed */
+            margin-left: 10px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -102,6 +117,7 @@
     </form>
     <nav>
         <div class="container">
+            
             {% if user.is_authenticated %}
                 
                 <button onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -113,4 +129,7 @@
         </div>
     </nav>
 </body>
+<footer>
+    &copy; 2023 Pi Innovations Pvt. Ltd. All rights reserved.
+</footer>
 </html>

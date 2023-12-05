@@ -31,6 +31,8 @@ class Assignment(models.Model):
     uploadedDate = models.DateField(auto_now_add=True,null=True,blank=True)  # Automatically set to the current date and time when created
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.FileField(upload_to='assignments/')
+    status = models.CharField(max_length = 10,choices = (('Checked','Checked'),
+                                                        ('Submitted','Submitted')),default='Submitted')
 
     def __str__(self):
         return self.title
