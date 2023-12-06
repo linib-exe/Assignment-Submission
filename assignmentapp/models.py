@@ -42,7 +42,9 @@ class Assignment(models.Model):
     file = models.FileField(upload_to='assignments/')
     status = models.CharField(max_length = 10,choices = (('Checked','Checked'),
                                                         ('Submitted','Submitted')),default='Submitted')
+    remarks = models.TextField(default="No Remarks")
 
     def __str__(self):
         return self.title
+
 

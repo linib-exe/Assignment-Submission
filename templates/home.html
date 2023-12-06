@@ -104,8 +104,6 @@ nav i {
 span{
     padding-left: 15px;
 }
-
-        
     </style>
 </head>
 
@@ -131,6 +129,7 @@ span{
                 <th>Assignment</th>
                 <th>Date </th>
                 <th>Status</th>
+                <th>Remarks</th>
             </tr>
         </thead>
         <tbody>
@@ -140,6 +139,7 @@ span{
                 <td>{{ assignment.title }}</td>
                 <td>{{ assignment.uploadedDate }}</td>
                 <td>{{ assignment.status }}</td>
+                <td>{{ assignment.remarks }}</td>
             </tr>
             {% endfor %}
         </tbody>
