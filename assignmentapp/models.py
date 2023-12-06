@@ -37,7 +37,7 @@ class Teacher(models.Model):
 
 class Assignment(models.Model):
     title = models.CharField(max_length=200)
-    uploadedDate = models.DateField(auto_now_add=True,null=True,blank=True)  # Automatically set to the current date and time when created
+    uploadedDate = models.DateField(auto_now_add=True,null=True,blank=True)  
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.FileField(upload_to='assignments/')
     status = models.CharField(max_length = 10,choices = (('Checked','Checked'),

@@ -4,93 +4,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Side Drawer Example</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Font Awesome CSS link -->
 
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
 
-        /* Sidebar Styles */
-        .sidenav {
-            height: 100%;
-            width: 250px; /* Set the default width */
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #333;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
+nav {
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    text-align: right;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-        .sidenav a {
-            padding: 8px 8px 8px 32px;
+nav button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+    background-color: #45a049;
+    color: #fff;
+}
+
+.container {
+    padding: 20px;
+    margin-top: 10px;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 150px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin-left: 150px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Make the "Date of Submission" column smaller */
+td:nth-child(3) {
+    font-size: 14px;
+}
+
+/* Add alternating row colors */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 600px) {
+    /* Adjust styles for smaller screens */
+}
+
+/* Icon Styling */
+nav i {
+    margin-right: 5px;
+    /* Add space between icon and text */
+}
+span{
+    padding-left: 15px;
+}
+
+a {
             text-decoration: none;
-            font-size: 18px;
-            color: white;
-            display: block;
-            transition: 0.3s;
+            color: #333; /* Set the desired color */
         }
 
-        .sidenav a:hover {
-            color: #4CAF50;
+        a:hover {
+            color: #4CAF50; /* Set the desired hover color */
         }
 
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 30px;
-            margin-left: 50px;
-        }
-
-        /* Page Content */
-        #main {
-            transition: margin-left .5s;
-            padding: 20px;
-            margin-left: 250px; /* Set the default margin-left */
-        }
     </style>
 </head>
 
 <body>
 
-    <!-- Side Drawer (Navigation) -->
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-    </div>
+    <nav>
+        <div class="container">
+            {% if user.is_authenticated %}
+                <button onclick="location.href='{% url 'submit' %}'"><i class="fas fa-upload"></i> Submit</button>
+                <button onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                <!-- <span>Hello, {{ user.username }}</span> -->
+                <span>Hello, {{ student.name }}</span>
+            {% else %}
+                <button onclick="location.href='{% url 'register' %}'"><i class="fas fa-user-plus"></i> Register</button>
+                <button onclick="location.href='{% url 'login' %}'"><i class="fas fa-sign-in-alt"></i> Login</button>
+            {% endif %}
+        </div>
+    </nav>
+    {% if user.is_authenticated %}
+    <table>
+        <thead>
+            <tr>
+                <th>S.N.</th>
+                <th>Assignment</th>
+                <th>Date </th>
+                <th>Status</th>
+                <th>Submitted By</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assignment in assignments %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'update_assignment' assignment.id %}">{{ assignment.title }}</a></td>
+                <td>{{ assignment.uploadedDate }}</td>
+                <td>{{ assignment.status }}</td>
+                <td>{{ assignment.uploaded_by}}</td>
+                <td>{{ assignment.remarks }}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 
-    <!-- Page Content -->
-    <div id="main">
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-
-    </div>
-
-    <!-- JavaScript to open and close the side drawer -->
-    <script>
-        // Open the drawer by default
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
-        }
-    </script>
+    <footer>
+        &copy; 2023 Pi Innovations Pvt. Ltd. All rights reserved.
+    </footer>
 </body>
 
 </html>

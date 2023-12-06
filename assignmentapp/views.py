@@ -70,37 +70,47 @@ def logout_user(request):
     logout(request)
     return redirect('home')
 
-# @login_required(login_url='login')
-def dashboard(request):
+@login_required(login_url='login')
+def teacher_dashboard(request):
+    stu = None
     if request.user.is_authenticated:
-        # If the user is logged in, filter assignments for the logged-in user
-        assignments = Assignment.objects.filter(uploaded_by=request.user)
-    else:
-        # Handle the case when the user is not logged in
-        assignments = []
-
-    return render(request, 'dashboard.html', {'assignments': assignments})
+        stu = Student.objects.get(user=request.user)
+    assignments = Assignment.objects.all()
+    return render(request, 'dashboard.html', {'assignments': assignments,'student':stu})
 
 
 @login_required(login_url='login')
-  # Ensure the user is logged in to access this view
 def submit(request):
     student = get_object_or_404(Student, user=request.user)
     if request.method == 'POST':
         title = request.POST.get('title')
         message = request.POST.get('message')
-
-        # Assuming you want to create a new assignment for the currently logged-in user
+        file = request.FILES.get('file')
+        
         assignment = Assignment(
             title=title,
             uploaded_by=request.user,
-            file = request.FILES.get('file')
+            file = file
         )
         assignment.save()
 
         messages.success(request, 'Assignment submitted successfully!')
-        return redirect('home')  # Redirect to a page showing a list of assignments
+        return redirect('home')  
+    return render(request, 'submit.html',{'student':student})  
 
-    return render(request, 'submit.html',{'student':student})  # Adjust the template name as needed
+def update_assignment(request,id):
+    assignment = Assignment.objects.get(pk=id)
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        remarks = request.POST.get('remarks')
+
+        assignment.status = status
+        assignment.remarks = remarks
+        assignment.save()
+
+        messages.success(request, 'Assignment updated successfully!')
+        return redirect('dashboard') 
+    return render(request,'update_assignment.html',{'assignment':assignment})
+
 
     
