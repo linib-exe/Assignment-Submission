@@ -8,6 +8,7 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
+    stu = None
     if request.user.is_authenticated:
         # If the user is logged in, filter assignments for the logged-in user
         assignments = Assignment.objects.filter(uploaded_by=request.user)
