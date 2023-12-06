@@ -98,6 +98,7 @@ def submit(request):
         return redirect('home')  
     return render(request, 'submit.html',{'student':student})  
 
+@login_required(login_url='login')
 def update_assignment(request,id):
     assignment = Assignment.objects.get(pk=id)
     if request.method == 'POST':
