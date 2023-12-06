@@ -73,10 +73,11 @@ def logout_user(request):
 @login_required(login_url='login')
 def teacher_dashboard(request):
     stu = None
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.student.isteacher:
         stu = Student.objects.get(user=request.user)
-    assignments = Assignment.objects.all()
-    return render(request, 'dashboard.html', {'assignments': assignments,'student':stu})
+        assignments = Assignment.objects.all()
+        return render(request, 'dashboard.html', {'assignments': assignments,'student':stu})
+    return render(request,'dashboard.html',{'student':stu})
 
 
 @login_required(login_url='login')
@@ -100,17 +101,19 @@ def submit(request):
 
 @login_required(login_url='login')
 def update_assignment(request,id):
-    assignment = Assignment.objects.get(pk=id)
-    if request.method == 'POST':
-        status = request.POST.get('status')
-        remarks = request.POST.get('remarks')
+    assignment = None
+    if request.user.is_authenticated and request.user.student.isteacher:
+        assignment = Assignment.objects.get(pk=id)
+        if request.method == 'POST':
+            status = request.POST.get('status')
+            remarks = request.POST.get('remarks')
 
-        assignment.status = status
-        assignment.remarks = remarks
-        assignment.save()
+            assignment.status = status
+            assignment.remarks = remarks
+            assignment.save()
 
-        messages.success(request, 'Assignment updated successfully!')
-        return redirect('dashboard') 
+            messages.success(request, 'Assignment updated successfully!')
+            return redirect('dashboard') 
     return render(request,'update_assignment.html',{'assignment':assignment})
 
 

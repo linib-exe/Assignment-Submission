@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Student(models.Model):
-    user = models.ForeignKey(User,blank=True,default=True,on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length = 30)
     password = models.CharField(max_length = 30)
     contact = models.CharField(max_length = 10)
@@ -23,14 +23,7 @@ class Student(models.Model):
     section = models.CharField(max_length = 10,choices=(('A','A'),
                                                         ('B','B')))
     
-    def __str__(self):
-        return self.name 
-
-class Teacher(models.Model):
-    user = models.ForeignKey(User,blank=True,default=True,on_delete=models.CASCADE)
-    name = models.CharField(max_length = 30)
-    password = models.CharField(max_length = 30)
-    contact = models.CharField(max_length = 10)
+    isteacher = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name 
